@@ -17,7 +17,6 @@ namespace Login
         Color placeholderColor = Color.Gray;
         Color textColor = Color.Black;
 
-        private string HashPassword(string password)
         {
             using (var sha256 = System.Security.Cryptography.SHA256.Create())
             {
