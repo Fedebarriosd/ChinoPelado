@@ -16,6 +16,8 @@ Es el nombre del proyecto. Simula una pizzería que necesita un software de gest
 - [DB Browser](https://sqlitebrowser.org/dl/), aunque no es estrictamente necesario, ayuda a visualizar y operar con SQLite. Es el que usamos nosotros.
 - .NET Framework. Se instala desde el setup manager de Visual Studio. Nosotros usamos la versión [9.0](https://dotnet.microsoft.com/es-es/download/dotnet/9.0)
 
+## Consideraciones importantes
+La base de datos se crea automáticamente en la carpeta Login/bin/Debug con el nombre "Usuarios.db"
 ## Permisos de uso
 Nosotros creemos firmemente en el código libre y en sus principios éticos frente al software propietario; es por ello que nuestro proyecto entero está bajo la licencia GNU General Public License (GPL) 3.0. Para más información sobre qué es sofware libre, consulte la [página de GNU](https://www.gnu.org/philosophy/free-sw.html).
 Es importante recordar los 4 principios _fundamentales_ del software libre, los cuales son:
