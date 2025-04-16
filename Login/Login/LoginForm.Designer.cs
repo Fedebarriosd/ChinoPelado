@@ -1,18 +1,28 @@
 ﻿using System;
+using System.Windows.Forms;
 
 namespace SistemaLogin
 {
     partial class LoginForm
     {
+        /// <summary>
+        /// Variable del diseñador necesaria.
+        /// </summary>
         private System.ComponentModel.IContainer components = null;
-        private System.Windows.Forms.TextBox txtUsuario;
-        private System.Windows.Forms.TextBox txtContraseña;
-        private System.Windows.Forms.Button btnIniciarSesion;
-        private System.Windows.Forms.Label lblUsuario;
-        private System.Windows.Forms.Label lblContraseña;
-        private System.Windows.Forms.Label lblBienvenida;
-        private System.Windows.Forms.Label lblMensaje;
 
+        // Controles
+        private TableLayoutPanel tableLayoutPanel1;
+        private Label lblUsuario;
+        private TextBox txtUsuario;
+        private Label lblContraseña;
+        private TextBox txtContraseña;
+        private Button btnIniciarSesion;
+        private Label lblMensaje;
+
+        /// <summary>
+        /// Limpiar los recursos que se estén usando.
+        /// </summary>
+        /// <param name="disposing">true si los recursos administrados se deben desechar; false en caso contrario.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,136 +30,118 @@ namespace SistemaLogin
             base.Dispose(disposing);
         }
 
+        #region Código generado por el Diseñador de Windows Forms
+
+        /// <summary>
+        /// Método necesario para admitir el Diseñador. No se puede modificar 
+        /// el contenido del método con el editor de código.
+        /// </summary>
         private void InitializeComponent()
         {
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.lblUsuario = new System.Windows.Forms.Label();
             this.txtUsuario = new System.Windows.Forms.TextBox();
+            this.lblContraseña = new System.Windows.Forms.Label();
             this.txtContraseña = new System.Windows.Forms.TextBox();
             this.btnIniciarSesion = new System.Windows.Forms.Button();
-            this.lblUsuario = new System.Windows.Forms.Label();
-            this.lblContraseña = new System.Windows.Forms.Label();
-            this.lblBienvenida = new System.Windows.Forms.Label();
             this.lblMensaje = new System.Windows.Forms.Label();
+            this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 40F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 60F));
+            this.tableLayoutPanel1.Controls.Add(this.lblUsuario, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.txtUsuario, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.lblContraseña, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.txtContraseña, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.btnIniciarSesion, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.lblMensaje, 0, 3);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 30F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(400, 200);
+            this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // lblUsuario
+            // 
+            this.lblUsuario.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblUsuario.AutoSize = true;
+            this.lblUsuario.Location = new System.Drawing.Point(100, 12);
+            this.lblUsuario.Name = "lblUsuario";
+            this.lblUsuario.Size = new System.Drawing.Size(57, 16);
+            this.lblUsuario.TabIndex = 0;
+            this.lblUsuario.Text = "Usuario:";
             // 
             // txtUsuario
             // 
-            this.txtUsuario.Location = new System.Drawing.Point(100, 27);
+            this.txtUsuario.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtUsuario.Location = new System.Drawing.Point(163, 9);
+            this.txtUsuario.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.txtUsuario.Name = "txtUsuario";
-            this.txtUsuario.Size = new System.Drawing.Size(150, 22);
+            this.txtUsuario.Size = new System.Drawing.Size(234, 22);
             this.txtUsuario.TabIndex = 1;
-            // Asignar los eventos Enter y Leave para manejar el placeholder
-            this.txtUsuario.Enter += new System.EventHandler(this.txtUsuario_Enter);
-            this.txtUsuario.Leave += new System.EventHandler(this.txtUsuario_Leave);
+            // 
+            // lblContraseña
+            // 
+            this.lblContraseña.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.lblContraseña.AutoSize = true;
+            this.lblContraseña.Location = new System.Drawing.Point(78, 52);
+            this.lblContraseña.Name = "lblContraseña";
+            this.lblContraseña.Size = new System.Drawing.Size(79, 16);
+            this.lblContraseña.TabIndex = 2;
+            this.lblContraseña.Text = "Contraseña:";
             // 
             // txtContraseña
             // 
-            this.txtContraseña.Location = new System.Drawing.Point(100, 67);
+            this.txtContraseña.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtContraseña.Location = new System.Drawing.Point(163, 49);
+            this.txtContraseña.Margin = new System.Windows.Forms.Padding(3, 5, 3, 5);
             this.txtContraseña.Name = "txtContraseña";
-            this.txtContraseña.PasswordChar = '*';
-            this.txtContraseña.Size = new System.Drawing.Size(150, 22);
+            this.txtContraseña.Size = new System.Drawing.Size(234, 22);
             this.txtContraseña.TabIndex = 3;
             this.txtContraseña.UseSystemPasswordChar = true;
-            // Asignar los eventos Enter y Leave para manejar el placeholder
-            this.txtContraseña.Enter += new System.EventHandler(this.txtContraseña_Enter);
-            this.txtContraseña.Leave += new System.EventHandler(this.txtContraseña_Leave);
             // 
             // btnIniciarSesion
             // 
-            this.btnIniciarSesion.Location = new System.Drawing.Point(100, 110);
+            this.btnIniciarSesion.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tableLayoutPanel1.SetColumnSpan(this.btnIniciarSesion, 2);
+            this.btnIniciarSesion.Location = new System.Drawing.Point(162, 93);
             this.btnIniciarSesion.Name = "btnIniciarSesion";
             this.btnIniciarSesion.Size = new System.Drawing.Size(75, 23);
             this.btnIniciarSesion.TabIndex = 4;
             this.btnIniciarSesion.Text = "Iniciar sesión";
             this.btnIniciarSesion.Click += new System.EventHandler(this.btnIniciarSesion_Click);
             // 
-            // lblUsuario
-            // 
-            this.lblUsuario.AutoSize = true;
-            this.lblUsuario.Location = new System.Drawing.Point(30, 30);
-            this.lblUsuario.Name = "lblUsuario";
-            this.lblUsuario.Size = new System.Drawing.Size(57, 16);
-            this.lblUsuario.TabIndex = 0;
-            this.lblUsuario.Text = "Usuario:";
-            // 
-            // lblContraseña
-            // 
-            this.lblContraseña.AutoSize = true;
-            this.lblContraseña.Location = new System.Drawing.Point(30, 70);
-            this.lblContraseña.Name = "lblContraseña";
-            this.lblContraseña.Size = new System.Drawing.Size(79, 16);
-            this.lblContraseña.TabIndex = 2;
-            this.lblContraseña.Text = "Contraseña:";
-            // 
-            // lblBienvenida
-            // 
-            this.lblBienvenida.AutoSize = true;
-            this.lblBienvenida.Location = new System.Drawing.Point(30, 150);
-            this.lblBienvenida.Name = "lblBienvenida";
-            this.lblBienvenida.Size = new System.Drawing.Size(0, 16);
-            this.lblBienvenida.TabIndex = 5;
-            // 
             // lblMensaje
             // 
-            this.lblMensaje.AutoSize = true;
-            this.lblMensaje.Location = new System.Drawing.Point(116, 117);
+            this.lblMensaje.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tableLayoutPanel1.SetColumnSpan(this.lblMensaje, 2);
+            this.lblMensaje.Location = new System.Drawing.Point(78, 151);
             this.lblMensaje.Name = "lblMensaje";
-            this.lblMensaje.Size = new System.Drawing.Size(44, 16);
-            this.lblMensaje.TabIndex = 6;
-            this.lblMensaje.Text = "label1";
-            this.lblMensaje.Visible = false;
+            this.lblMensaje.Size = new System.Drawing.Size(244, 28);
+            this.lblMensaje.TabIndex = 5;
             // 
             // LoginForm
             // 
-            this.ClientSize = new System.Drawing.Size(300, 200);
-            this.Controls.Add(this.lblUsuario);
-            this.Controls.Add(this.txtUsuario);
-            this.Controls.Add(this.lblContraseña);
-            this.Controls.Add(this.txtContraseña);
-            this.Controls.Add(this.btnIniciarSesion);
-            this.Controls.Add(this.lblBienvenida);
-            this.Controls.Add(this.lblMensaje);
+            this.ClientSize = new System.Drawing.Size(400, 200);
+            this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "LoginForm";
             this.Text = "Login";
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
-        // Métodos para manejar los eventos de Enter y Leave de los TextBox
-        private void txtUsuario_Enter(object sender, EventArgs e)
-        {
-            if (txtUsuario.Text == "Ingrese su usuario...")
-            {
-                txtUsuario.Text = "";
-                txtUsuario.ForeColor = System.Drawing.Color.Black;
-            }
-        }
-
-        private void txtUsuario_Leave(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtUsuario.Text))
-            {
-                txtUsuario.Text = "Ingrese su usuario...";
-                txtUsuario.ForeColor = System.Drawing.Color.Gray;
-            }
-        }
-
-        private void txtContraseña_Enter(object sender, EventArgs e)
-        {
-            if (txtContraseña.Text == "Ingrese su contraseña...")
-            {
-                txtContraseña.Text = "";
-                txtContraseña.ForeColor = System.Drawing.Color.Black;
-            }
-        }
-
-        private void txtContraseña_Leave(object sender, EventArgs e)
-        {
-            if (string.IsNullOrWhiteSpace(txtContraseña.Text))
-            {
-                txtContraseña.Text = "Ingrese su contraseña...";
-                txtContraseña.ForeColor = System.Drawing.Color.Gray;
-            }
-        }
+        #endregion
     }
 }

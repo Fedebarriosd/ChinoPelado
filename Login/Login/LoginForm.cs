@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Login;
+using System;
 using System.Data.SQLite;
+using System.Drawing;
 using System.Security.Cryptography;
 using System.Text;
 using System.Windows.Forms;
@@ -13,10 +15,10 @@ namespace SistemaLogin
         public LoginForm()
         {
             InitializeComponent();
+            this.Icon = new Icon("Logo2.ico");
             CrearBaseDeDatosYTabla();
-            ConfigurePlaceholder(txtUsuario, "Ingrese su usuario...");
-            ConfigurePlaceholder(txtContraseña, "Ingrese su contraseña...");
-            InicializarPlaceholders();
+            ConfigurarPlaceholder(txtUsuario, "Ingrese su usuario...");
+            ConfigurarPlaceholder(txtContraseña, "Ingrese su contraseña...", true);
         }
 
         private void CrearBaseDeDatosYTabla()
@@ -24,14 +26,9 @@ namespace SistemaLogin
             // Verificamos si la base de datos existe
             using (var connection = new SQLiteConnection(connectionString))
             {
-                try
+                if (!System.IO.File.Exists("Usuarios.db"))
                 {
-                    connection.Open();
-                }
-                catch (SQLiteException)
-                {
-                    // Si ocurre un error, significa que la base de datos no existe, así que la creamos.
-                    SQLiteConnection.CreateFile("Usuarios.db"); // Esto crea la base de datos vacía
+                    SQLiteConnection.CreateFile("Usuarios.db");
                 }
             }
 
@@ -121,12 +118,11 @@ namespace SistemaLogin
 
         private bool VerificarContraseña(string contrasenaIngresada, string contraseñaGuardada)
         {
-            using (var sha256 = new SHA256Managed())
+            using (var sha256 = SHA256.Create())
             {
                 var passwordBytes = Encoding.UTF8.GetBytes(contrasenaIngresada);
                 var hashBytes = sha256.ComputeHash(passwordBytes);
                 string hashIngresado = BitConverter.ToString(hashBytes).Replace("-", "").ToLower();
-
                 return hashIngresado == contraseñaGuardada;
             }
         }
@@ -136,36 +132,28 @@ namespace SistemaLogin
             string usuario = txtUsuario.Text;
             string contrasena = txtContraseña.Text;
 
-            // Verificar si el usuario y la contraseña son correctos
             bool usuarioValido = VerificarUsuario(usuario, contrasena);
-
             if (usuarioValido)
             {
-                // Ocultar los controles de inicio de sesión
-                txtUsuario.Visible = false;
-                txtContraseña.Visible = false;
-                btnIniciarSesion.Visible = false;
-                lblUsuario.Visible = false;
-                lblContraseña.Visible = false;
-
-                // Si el usuario es válido, mostrar un mensaje de bienvenida
-                lblMensaje.Text = "Bienvenido";
-                lblMensaje.Visible = true;
-
-                // Verificar si es un administrador
                 bool esAdministrador = EsAdministrador(usuario);
+                this.Hide();
 
                 if (esAdministrador)
                 {
-                    // Si es administrador, abrir el formulario de administrador
-                    AdminForm adminForm = new AdminForm();
-                    adminForm.Show();
-                    this.Hide(); // Oculta el formulario de inicio de sesión
+                    using (AdminForm adminForm = new AdminForm())
+                    {
+                        adminForm.ShowDialog();
+                    }
                 }
                 else
                 {
-                    MostrarOpcionesUsuarioNormal();
+                    using (UserForm userForm = new UserForm())
+                    {
+                        userForm.ShowDialog();
+                    }
                 }
+
+                this.Close();
             }
             else
             {
@@ -200,51 +188,6 @@ namespace SistemaLogin
             // Por ejemplo, abrir un formulario diferente o mostrar diferentes botones
         }
 
-        // Configurar placeholder en el TextBox
-        private void ConfigurePlaceholder(TextBox txtBox, string placeholder)
-        {
-            // Establecer el texto por defecto del placeholder
-            txtBox.ForeColor = System.Drawing.Color.Gray;
-            txtBox.Text = placeholder;
-
-            // Cuando el usuario hace clic (Enter) en el TextBox, se borra el placeholder
-            txtBox.Enter += (sender, e) =>
-            {
-                if (txtBox.Text == placeholder)
-                {
-                    txtBox.Text = "";
-                    txtBox.ForeColor = System.Drawing.Color.Black;
-                }
-            };
-
-            // Cuando el usuario sale (Leave) del TextBox, si está vacío, se muestra el placeholder
-            txtBox.Leave += (sender, e) =>
-            {
-                if (string.IsNullOrWhiteSpace(txtBox.Text))
-                {
-                    txtBox.Text = placeholder;
-                    txtBox.ForeColor = System.Drawing.Color.Gray;
-                }
-            };
-        }
-
-        // Función para inicializar los placeholders
-        private void InicializarPlaceholders()
-        {
-            // Para el campo de usuario
-            txtUsuario.Text = "Ingrese su usuario...";
-            txtUsuario.ForeColor = System.Drawing.Color.Gray;
-            txtUsuario.GotFocus += TxtUsuario_GotFocus;
-            txtUsuario.LostFocus += TxtUsuario_LostFocus;
-
-            // Para el campo de contraseña
-            txtContraseña.Text = "Ingrese su contraseña...";
-            txtContraseña.ForeColor = System.Drawing.Color.Gray;
-            txtContraseña.GotFocus += TxtContraseña_GotFocus;
-            txtContraseña.LostFocus += TxtContraseña_LostFocus;
-        }
-
-        // Cuando el campo de usuario recibe foco (se hace clic o se selecciona)
         private void TxtUsuario_GotFocus(object sender, EventArgs e)
         {
             if (txtUsuario.Text == "Ingrese su usuario...")
@@ -254,7 +197,7 @@ namespace SistemaLogin
             }
         }
 
-        // Cuando el campo de usuario pierde el foco (cuando el usuario deja el campo vacío)
+        
         private void TxtUsuario_LostFocus(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtUsuario.Text))
@@ -264,7 +207,7 @@ namespace SistemaLogin
             }
         }
 
-        // Cuando el campo de contraseña recibe foco
+        
         private void TxtContraseña_GotFocus(object sender, EventArgs e)
         {
             if (txtContraseña.Text == "Ingrese su contraseña...")
@@ -275,7 +218,7 @@ namespace SistemaLogin
             }
         }
 
-        // Cuando el campo de contraseña pierde el foco
+        
         private void TxtContraseña_LostFocus(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtContraseña.Text))
@@ -285,6 +228,38 @@ namespace SistemaLogin
                 txtContraseña.UseSystemPasswordChar = false; // Desactiva los asteriscos
             }
         }
+
+        private void ConfigurarPlaceholder(TextBox txtBox, string placeholder, bool esContraseña = false)
+        {
+            // Asigna el placeholder inicial
+            txtBox.Text = placeholder;
+            txtBox.ForeColor = System.Drawing.Color.Gray;
+
+            // Configurar evento Enter
+            txtBox.Enter += (sender, e) =>
+            {
+                if (txtBox.Text == placeholder)
+                {
+                    txtBox.Text = "";
+                    txtBox.ForeColor = System.Drawing.Color.Black;
+                    if (esContraseña)
+                        txtBox.UseSystemPasswordChar = true;
+                }
+            };
+
+            // Configurar evento Leave
+            txtBox.Leave += (sender, e) =>
+            {
+                if (string.IsNullOrWhiteSpace(txtBox.Text))
+                {
+                    txtBox.Text = placeholder;
+                    txtBox.ForeColor = System.Drawing.Color.Gray;
+                    if (esContraseña)
+                        txtBox.UseSystemPasswordChar = false;
+                }
+            };
+        }
+
 
     }
 }
