@@ -133,34 +133,41 @@ namespace SistemaLogin
             string contrasena = txtContraseña.Text;
 
             bool usuarioValido = VerificarUsuario(usuario, contrasena);
-            if (usuarioValido)
-            {
-                bool esAdministrador = EsAdministrador(usuario);
-                this.Hide();
-
-                if (esAdministrador)
-                {
-                    using (AdminForm adminForm = new AdminForm())
-                    {
-                        adminForm.ShowDialog();
-                    }
-                }
-                else
-                {
-                    using (UserForm userForm = new UserForm())
-                    {
-                        userForm.ShowDialog();
-                    }
-                }
-
-                this.Close();
-            }
-            else
+            if (!usuarioValido)
             {
                 lblMensaje.Text = "Usuario o contraseña incorrectos.";
                 lblMensaje.Visible = true;
+                return;
             }
+
+            bool esAdministrador = EsAdministrador(usuario);
+            this.Hide();
+
+            // Mostrar el formulario y capturar el DialogResult
+            DialogResult dr;
+            if (esAdministrador)
+            {
+                using (var adminForm = new AdminForm())
+                    dr = adminForm.ShowDialog();
+            }
+            else
+            {
+                using (var userForm = new UserForm())
+                    dr = userForm.ShowDialog();
+            }
+
+            // Si el formulario devolvió Retry, es un logout: volvemos al login
+            if (dr == DialogResult.Retry)
+            {
+                this.Show();
+                lblMensaje.Visible = false;  //limpiar mensaje previo
+                return;
+            }
+
+            // Cualquier otro resultado cierra el login y termina la app
+            this.Close();
         }
+
 
         private bool EsAdministrador(string usuario)
         {

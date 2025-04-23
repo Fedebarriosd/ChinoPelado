@@ -1,4 +1,6 @@
-﻿namespace SistemaLogin
+﻿using System.Windows.Forms;
+
+namespace SistemaLogin
 {
     partial class AdminForm
     {
@@ -10,6 +12,8 @@
         private System.Windows.Forms.Button btnAgregar;
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Button btnDesactivar;
+        private System.Windows.Forms.Button btnCerrarSesion;
+
 
         /// <summary>
         /// Limpiar los recursos que se estén usando.
@@ -84,6 +88,23 @@
             this.Name = "AdminForm";
             this.Text = "Panel de Administrador";
             this.ResumeLayout(false);
+
+            // 
+            // btnCerrarSesion
+            // 
+            this.btnCerrarSesion = new System.Windows.Forms.Button();
+            this.btnCerrarSesion.Text = "Cerrar sesión";
+            this.btnCerrarSesion.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
+
+            this.tableLayoutPanel1.RowCount = 4;
+            this.tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            this.tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
+            this.tableLayoutPanel1.Controls.Add(this.btnCerrarSesion, 0, 3);
+            this.tableLayoutPanel1.SetColumnSpan(this.btnCerrarSesion, 1);
+
         }
 
         #endregion

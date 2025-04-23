@@ -157,6 +157,14 @@ namespace SistemaLogin
                 }
             }
         }
+
+        private void btnCerrarSesion_Click(object sender, EventArgs e)
+        {
+            // Indicamos al llamador que solicitamos un "logout"
+            this.DialogResult = DialogResult.Retry;
+            this.Close();
+        }
+
     }
 
     // Clase auxiliar para manejar operaciones de seguridad (calcular hash de contraseñas)
