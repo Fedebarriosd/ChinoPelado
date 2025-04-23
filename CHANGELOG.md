@@ -12,6 +12,8 @@ Todas las versiones y cambios importantes.
   - Suscripción a `btnIniciarSesion.Click` tras `InitializeComponent()`.
 - Flujo de navegación:
   - Uso de `ShowDialog()` para abrir formularios Admin/User y `this.Close()` al terminar.
+- Cierre de sesión:
+  - Login ahora detecta `DialogResult.Retry` para mostrar nuevamente el login tras cerrar sesión desde el AdminForm o UserForm.
 
 ### LoginForm.Designer.cs
 - Layout responsivo:
@@ -24,16 +26,20 @@ Todas las versiones y cambios importantes.
 - Seguridad:
   - Movido `CalcularHash` a la clase estática `SeguridadHelper`.
 - Refactor de operaciones:
-  - `btnAgregar` y `btnDesactivar` envueltos en `try-catch` usando `EjecutarQuery`.
+  - `btnAgregar` y `btnDesactivar` envueltos en `try-catch` usando `EjecutarQuery()`.
   - `btnEditar` muestra `EditarPerfilForm` y pasa parámetros a nuevo método `EditarPerfil(...)`.
 - Nuevo método `EditarPerfil(...)`:
   - Dos variantes de `UPDATE`: con o sin nueva contraseña.
   - Mensaje único de éxito: `MessageBox.Show("Perfil editado correctamente.")`.
+- Nuevo botón `Cerrar sesión`:
+  - Agregado botón en la cuarta fila del `TableLayoutPanel`.
+  - Devuelve `DialogResult.Retry` al LoginForm para reiniciar sesión sin cerrar la aplicación.
 
 ### AdminForm.Designer.cs
 - Layout responsivo:
-  - Uso de `TableLayoutPanel` de 1 columna y 3 filas con `Dock = Fill`.
+  - Uso de `TableLayoutPanel` de 1 columna y 4 filas con `Dock = Fill`.
   - Botones con `Dock = Fill`, sin `Location`/`Size` fijos.
+  - Añadido botón `Cerrar sesión` en fila 3.
 
 ### DbConfig.cs
 - Centralización de la cadena de conexión:
@@ -82,7 +88,7 @@ Todas las versiones y cambios importantes.
   - Campo `_tooltipContrasena` con `ShowAlways = true`, delays configurados.
 - Validación de unicidad:
   - Inclusión de `UsuarioExiste(string)` para evitar duplicados antes de aceptar.
-  
+
 ### Archivos ICO y CHANGELOG añadidos
 - El logo del comercio fue convertido a ICO y añadido como imagen del proyecto.
 - El changelog (este mismo archivo que está leyendo) fue añadido al proyecto.
