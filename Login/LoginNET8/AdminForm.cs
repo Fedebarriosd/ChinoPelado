@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data.SQLite;
 using System.Windows.Forms;
+using SistemaLogin;
+
 
 namespace SistemaLogin
 {
@@ -179,8 +181,4 @@ namespace SistemaLogin
             this.Close();
         }
     }
-
-    /// <summary>
-    /// Clase auxiliar para operaciones de seguridad como el cálculo de hashes.
-    /// </summary>
 }

@@ -64,7 +64,7 @@ namespace SistemaLogin
                     long existe = (long)cmdVerificar.ExecuteScalar();
                     if (existe == 0)
                     {
-                        string hashAdmin = CalcularHash("admin123");
+                        string hashAdmin = SeguridadHelper.CalcularHash("admin123");
                         string insertarAdmin = "INSERT INTO Usuarios (Usuario, Contraseña, EsAdministrador, Activo) VALUES ('admin', @contrasena, 1, 1)";
                         using (var cmdInsertar = new SQLiteCommand(insertarAdmin, connection))
                         {
@@ -73,24 +73,6 @@ namespace SistemaLogin
                         }
                     }
                 }
-            }
-        }
-
-        /// <summary>
-        /// Calcula el hash SHA256 para una cadena de texto.
-        /// </summary>
-        /// <param name="input">Texto plano</param>
-        /// <returns>Hash en formato hexadecimal</returns>
-        private string CalcularHash(string input)
-        {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] inputBytes = Encoding.UTF8.GetBytes(input);
-                byte[] hashBytes = sha256.ComputeHash(inputBytes);
-                StringBuilder sb = new StringBuilder();
-                foreach (var b in hashBytes)
-                    sb.Append(b.ToString("x2"));
-                return sb.ToString();
             }
         }
 
