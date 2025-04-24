@@ -4,23 +4,30 @@ using System.Windows.Forms;
 
 namespace SistemaLogin
 {
+    /// <summary>
+    /// Formulario principal del administrador para gestionar perfiles de usuario.
+    /// </summary>
     public partial class AdminForm : Form
     {
         private string connectionString = @"Data Source=Usuarios.db;Version=3;";
 
+        /// <summary>
+        /// Inicializa el formulario de administrador.
+        /// </summary>
         public AdminForm()
         {
             InitializeComponent();
         }
 
-        // Función para agregar un nuevo perfil
+        /// <summary>
+        /// Maneja la acción de agregar un nuevo perfil.
+        /// </summary>
         private void btnAgregar_Click(object sender, EventArgs e)
         {
             using (AgregarPerfilForm agregarForm = new AgregarPerfilForm())
             {
                 if (agregarForm.ShowDialog() == DialogResult.OK)
                 {
-                    // Obtenemos los datos ingresados
                     string usuario = agregarForm.Usuario;
                     string contrasena = agregarForm.Contrasena;
                     bool esAdministrador = agregarForm.EsAdministrador;
@@ -44,7 +51,9 @@ namespace SistemaLogin
             }
         }
 
-        // Función para editar un perfil
+        /// <summary>
+        /// Maneja la acción de buscar y editar un perfil.
+        /// </summary>
         private void btnEditar_Click(object sender, EventArgs e)
         {
             using (BuscarPerfilForm buscarForm = new BuscarPerfilForm())
@@ -56,7 +65,6 @@ namespace SistemaLogin
                     {
                         if (editarForm.ShowDialog() == DialogResult.OK)
                         {
-                            // Pasamos usuario original, nuevo nombre, nuevaPass (puede ser null) y rol
                             EditarPerfil(
                                 usuarioOriginal,
                                 editarForm.Usuario,
@@ -69,22 +77,22 @@ namespace SistemaLogin
             }
         }
 
-        // Función que maneja la edición de un perfil
         /// <summary>
-        /// Actualiza un perfil. Si nuevaContraseña es null, no toca la columna Contraseña.
+        /// Actualiza los datos de un perfil. Si no se proporciona nueva contraseña, se mantiene la actual.
         /// </summary>
+        /// <param name="usuarioOriginal">Nombre de usuario actual</param>
+        /// <param name="nuevoUsuario">Nuevo nombre de usuario</param>
+        /// <param name="nuevaContraseña">Nueva contraseña (null si no se cambia)</param>
+        /// <param name="nuevoEsAdministrador">Nuevo estado de administrador</param>
         private void EditarPerfil(string usuarioOriginal,
                                  string nuevoUsuario,
                                  string nuevaContraseña,
                                  bool nuevoEsAdministrador)
         {
-            // Si se proporcionó nueva contraseña, actualizamos también ese campo
             if (nuevaContraseña != null)
             {
                 EjecutarQuery(
-                    "UPDATE Usuarios " +
-                    "SET Usuario = @usuario, Contraseña = @contrasena, EsAdministrador = @esAdministrador " +
-                    "WHERE Usuario = @usuarioOriginal",
+                    "UPDATE Usuarios SET Usuario = @usuario, Contraseña = @contrasena, EsAdministrador = @esAdministrador WHERE Usuario = @usuarioOriginal",
                     cmd =>
                     {
                         cmd.Parameters.AddWithValue("@usuario", nuevoUsuario);
@@ -95,11 +103,8 @@ namespace SistemaLogin
             }
             else
             {
-                // Sin contraseña nueva: sólo nombre y rol
                 EjecutarQuery(
-                    "UPDATE Usuarios " +
-                    "SET Usuario = @usuario, EsAdministrador = @esAdministrador " +
-                    "WHERE Usuario = @usuarioOriginal",
+                    "UPDATE Usuarios SET Usuario = @usuario, EsAdministrador = @esAdministrador WHERE Usuario = @usuarioOriginal",
                     cmd =>
                     {
                         cmd.Parameters.AddWithValue("@usuario", nuevoUsuario);
@@ -108,12 +113,12 @@ namespace SistemaLogin
                     });
             }
 
-            // Mensaje único de confirmación
-            MessageBox.Show("Perfil editado correctamente.", "Éxito",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBox.Show("Perfil editado correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        // Función para desactivar un perfil
+        /// <summary>
+        /// Maneja la acción de desactivar un perfil existente.
+        /// </summary>
         private void btnDesactivar_Click(object sender, EventArgs e)
         {
             using (BuscarPerfilForm buscarForm = new BuscarPerfilForm())
@@ -126,7 +131,10 @@ namespace SistemaLogin
             }
         }
 
-        // Función que actualiza el perfil en la base de datos para marcarlo como inactivo
+        /// <summary>
+        /// Marca un perfil como inactivo en la base de datos.
+        /// </summary>
+        /// <param name="usuario">Nombre del usuario a desactivar</param>
         private void DesactivarPerfil(string usuario)
         {
             try
@@ -144,7 +152,11 @@ namespace SistemaLogin
             }
         }
 
-        // Método auxiliar para ejecutar consultas SQL
+        /// <summary>
+        /// Ejecuta una consulta SQL utilizando parámetros personalizados.
+        /// </summary>
+        /// <param name="query">Consulta SQL a ejecutar</param>
+        /// <param name="configurarParametros">Acción para configurar los parámetros del comando</param>
         private void EjecutarQuery(string query, Action<SQLiteCommand> configurarParametros)
         {
             using (var connection = new SQLiteConnection(connectionString))
@@ -158,18 +170,26 @@ namespace SistemaLogin
             }
         }
 
+        /// <summary>
+        /// Cierra la sesión actual y retorna al formulario de login.
+        /// </summary>
         private void btnCerrarSesion_Click(object sender, EventArgs e)
         {
-            // Indicamos al llamador que solicitamos un "logout"
             this.DialogResult = DialogResult.Retry;
             this.Close();
         }
-
     }
 
-    // Clase auxiliar para manejar operaciones de seguridad (calcular hash de contraseñas)
+    /// <summary>
+    /// Clase auxiliar para operaciones de seguridad como el cálculo de hashes.
+    /// </summary>
     public static class SeguridadHelper
     {
+        /// <summary>
+        /// Calcula el hash SHA256 de una cadena de texto.
+        /// </summary>
+        /// <param name="input">Texto en plano</param>
+        /// <returns>Hash en formato hexadecimal</returns>
         public static string CalcularHash(string input)
         {
             using (var sha256 = System.Security.Cryptography.SHA256.Create())

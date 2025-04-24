@@ -5,10 +5,19 @@ using System.Windows.Forms;
 
 namespace SistemaLogin
 {
+    /// <summary>
+    /// Formulario para buscar y seleccionar un perfil de usuario activo.
+    /// </summary>
     public partial class BuscarPerfilForm : Form
     {
+        /// <summary>
+        /// Nombre del usuario seleccionado en el formulario.
+        /// </summary>
         public string UsuarioSeleccionado { get; private set; }
 
+        /// <summary>
+        /// Inicializa el formulario de búsqueda de perfiles.
+        /// </summary>
         public BuscarPerfilForm()
         {
             InitializeComponent();
@@ -16,6 +25,9 @@ namespace SistemaLogin
             btnSeleccionar.Enabled = false;
         }
 
+        /// <summary>
+        /// Carga los perfiles activos en el ListBox al iniciar el formulario.
+        /// </summary>
         private void BuscarPerfilForm_Load(object sender, EventArgs e)
         {
             try
@@ -32,13 +44,16 @@ namespace SistemaLogin
             }
         }
 
-        // Punto 1 & 2: helper para obtener la lista de usuarios activos y DataBinding
+        /// <summary>
+        /// Devuelve una lista de nombres de usuarios activos.
+        /// </summary>
+        /// <returns>Lista de usuarios activos</returns>
         private List<string> ObtenerUsuariosActivos()
         {
             var lista = new List<string>();
             EjecutarQueryReader(
                 "SELECT Usuario FROM Usuarios WHERE Activo = 1",
-                cmd => { /* no parameters */ },
+                cmd => { },
                 reader =>
                 {
                     while (reader.Read())
@@ -47,7 +62,12 @@ namespace SistemaLogin
             return lista;
         }
 
-        // Punto 1: helper genérico para lecturas
+        /// <summary>
+        /// Ejecuta una consulta de lectura a la base de datos.
+        /// </summary>
+        /// <param name="query">Consulta SQL a ejecutar</param>
+        /// <param name="configurarParametros">Acción para configurar los parámetros del comando</param>
+        /// <param name="procesarReader">Acción para procesar los resultados del lector</param>
         private void EjecutarQueryReader(
             string query,
             Action<SQLiteCommand> configurarParametros,
@@ -65,12 +85,17 @@ namespace SistemaLogin
             }
         }
 
-        // Punto 3: habilitar/deshabilitar botón según selección
+        /// <summary>
+        /// Habilita el botón seleccionar si hay un usuario elegido.
+        /// </summary>
         private void lstUsuarios_SelectedIndexChanged(object sender, EventArgs e)
         {
             btnSeleccionar.Enabled = lstUsuarios.SelectedItem != null;
         }
 
+        /// <summary>
+        /// Confirma la selección del usuario y cierra el formulario.
+        /// </summary>
         private void btnSeleccionar_Click(object sender, EventArgs e)
         {
             if (lstUsuarios.SelectedItem != null)
@@ -85,6 +110,9 @@ namespace SistemaLogin
             }
         }
 
+        /// <summary>
+        /// Cancela la selección y cierra el formulario.
+        /// </summary>
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;

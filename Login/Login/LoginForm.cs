@@ -8,10 +8,16 @@ using System.Windows.Forms;
 
 namespace SistemaLogin
 {
+    /// <summary>
+    /// Formulario de inicio de sesión principal del sistema.
+    /// </summary>
     public partial class LoginForm : Form
     {
-        string connectionString = @"Data Source=Usuarios.db;Version=3;";
+        private readonly string connectionString = @"Data Source=Usuarios.db;Version=3;";
 
+        /// <summary>
+        /// Inicializa el formulario de inicio de sesión y configura la base de datos.
+        /// </summary>
         public LoginForm()
         {
             InitializeComponent();
@@ -21,9 +27,11 @@ namespace SistemaLogin
             ConfigurarPlaceholder(txtContraseña, "Ingrese su contraseña...", true);
         }
 
+        /// <summary>
+        /// Crea la base de datos y la tabla de usuarios si no existen.
+        /// </summary>
         private void CrearBaseDeDatosYTabla()
         {
-            // Verificamos si la base de datos existe
             using (var connection = new SQLiteConnection(connectionString))
             {
                 if (!System.IO.File.Exists("Usuarios.db"))
@@ -32,12 +40,10 @@ namespace SistemaLogin
                 }
             }
 
-            // Ahora creamos la tabla Usuarios si no existe
             using (var connection = new SQLiteConnection(connectionString))
             {
                 connection.Open();
 
-                // Crear la tabla si no existe
                 string query = @"
                     CREATE TABLE IF NOT EXISTS Usuarios (
                         Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -45,23 +51,20 @@ namespace SistemaLogin
                         Contraseña TEXT,
                         EsAdministrador INTEGER,
                         Activo INTEGER
-                    );
-                ";
+                    );";
 
                 using (var cmd = new SQLiteCommand(query, connection))
                 {
                     cmd.ExecuteNonQuery();
                 }
 
-                // Verificar si el usuario admin existe y si no, lo creamos.
                 string verificarAdmin = "SELECT COUNT(*) FROM Usuarios WHERE Usuario = 'admin'";
                 using (var cmdVerificar = new SQLiteCommand(verificarAdmin, connection))
                 {
                     long existe = (long)cmdVerificar.ExecuteScalar();
                     if (existe == 0)
                     {
-                        // Crea un hash para la contraseña "admin123"
-                        string hashAdmin = CalcularHash("admin123"); // Contraseña: admin123
+                        string hashAdmin = CalcularHash("admin123");
                         string insertarAdmin = "INSERT INTO Usuarios (Usuario, Contraseña, EsAdministrador, Activo) VALUES ('admin', @contrasena, 1, 1)";
                         using (var cmdInsertar = new SQLiteCommand(insertarAdmin, connection))
                         {
@@ -73,6 +76,11 @@ namespace SistemaLogin
             }
         }
 
+        /// <summary>
+        /// Calcula el hash SHA256 para una cadena de texto.
+        /// </summary>
+        /// <param name="input">Texto plano</param>
+        /// <returns>Hash en formato hexadecimal</returns>
         private string CalcularHash(string input)
         {
             using (SHA256 sha256 = SHA256.Create())
@@ -86,6 +94,12 @@ namespace SistemaLogin
             }
         }
 
+        /// <summary>
+        /// Verifica si el usuario y la contraseña son válidos.
+        /// </summary>
+        /// <param name="usuario">Nombre de usuario</param>
+        /// <param name="contrasena">Contraseña en texto plano</param>
+        /// <returns>True si las credenciales son válidas y el usuario está activo</returns>
         private bool VerificarUsuario(string usuario, string contrasena)
         {
             using (var connection = new SQLiteConnection(connectionString))
@@ -101,21 +115,25 @@ namespace SistemaLogin
                     {
                         if (reader.Read())
                         {
-                            // Obtener la contraseña cifrada guardada en la base de datos
                             string contraseñaGuardada = reader["Contraseña"].ToString();
-                            // Verificar si la contraseña ingresada coincide con la guardada
                             if (VerificarContraseña(contrasena, contraseñaGuardada))
                             {
                                 bool estaActivo = Convert.ToBoolean(reader["Activo"]);
-                                return estaActivo; // Retorna true si el usuario está activo
+                                return estaActivo;
                             }
                         }
                     }
                 }
             }
-            return false; // Retorna false si no se encuentra el usuario o la contraseña es incorrecta
+            return false;
         }
 
+        /// <summary>
+        /// Compara una contraseña ingresada con su versión hasheada.
+        /// </summary>
+        /// <param name="contrasenaIngresada">Contraseña en texto plano</param>
+        /// <param name="contraseñaGuardada">Hash almacenado</param>
+        /// <returns>True si coinciden</returns>
         private bool VerificarContraseña(string contrasenaIngresada, string contraseñaGuardada)
         {
             using (var sha256 = SHA256.Create())
@@ -127,6 +145,9 @@ namespace SistemaLogin
             }
         }
 
+        /// <summary>
+        /// Maneja el inicio de sesión al presionar el botón correspondiente.
+        /// </summary>
         private void btnIniciarSesion_Click(object sender, EventArgs e)
         {
             string usuario = txtUsuario.Text;
@@ -143,7 +164,6 @@ namespace SistemaLogin
             bool esAdministrador = EsAdministrador(usuario);
             this.Hide();
 
-            // Mostrar el formulario y capturar el DialogResult
             DialogResult dr;
             if (esAdministrador)
             {
@@ -156,19 +176,21 @@ namespace SistemaLogin
                     dr = userForm.ShowDialog();
             }
 
-            // Si el formulario devolvió Retry, es un logout: volvemos al login
             if (dr == DialogResult.Retry)
             {
                 this.Show();
-                lblMensaje.Visible = false;  //limpiar mensaje previo
+                lblMensaje.Visible = false;
                 return;
             }
 
-            // Cualquier otro resultado cierra el login y termina la app
             this.Close();
         }
 
-
+        /// <summary>
+        /// Determina si un usuario es administrador.
+        /// </summary>
+        /// <param name="usuario">Nombre de usuario</param>
+        /// <returns>True si es administrador</returns>
         private bool EsAdministrador(string usuario)
         {
             using (var connection = new SQLiteConnection(connectionString))
@@ -181,92 +203,92 @@ namespace SistemaLogin
                     cmd.Parameters.AddWithValue("@usuario", usuario);
 
                     object result = cmd.ExecuteScalar();
-                    return result != null && Convert.ToBoolean(result); // Devuelve true si el usuario es administrador
+                    return result != null && Convert.ToBoolean(result);
                 }
             }
         }
 
+        /// <summary>
+        /// Placeholder para mostrar opciones de usuario normal (no implementado).
+        /// </summary>
         private void MostrarOpcionesUsuarioNormal()
         {
-            // Mostrar opciones para usuario normal
             lblMensaje.Text = "Opciones de usuario normal";
             lblMensaje.Visible = true;
-            // Aquí puedes agregar más opciones específicas para usuarios normales
-            // Por ejemplo, abrir un formulario diferente o mostrar diferentes botones
         }
+
+        // Métodos auxiliares para gestionar el enfoque de los campos de texto
 
         private void TxtUsuario_GotFocus(object sender, EventArgs e)
         {
             if (txtUsuario.Text == "Ingrese su usuario...")
             {
                 txtUsuario.Text = "";
-                txtUsuario.ForeColor = System.Drawing.Color.Black;
+                txtUsuario.ForeColor = Color.Black;
             }
         }
 
-        
         private void TxtUsuario_LostFocus(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtUsuario.Text))
             {
                 txtUsuario.Text = "Ingrese su usuario...";
-                txtUsuario.ForeColor = System.Drawing.Color.Gray;
+                txtUsuario.ForeColor = Color.Gray;
             }
         }
 
-        
         private void TxtContraseña_GotFocus(object sender, EventArgs e)
         {
             if (txtContraseña.Text == "Ingrese su contraseña...")
             {
                 txtContraseña.Text = "";
-                txtContraseña.ForeColor = System.Drawing.Color.Black;
-                txtContraseña.UseSystemPasswordChar = true; // Muestra asteriscos en el campo de contraseña
+                txtContraseña.ForeColor = Color.Black;
+                txtContraseña.UseSystemPasswordChar = true;
             }
         }
 
-        
         private void TxtContraseña_LostFocus(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtContraseña.Text))
             {
                 txtContraseña.Text = "Ingrese su contraseña...";
-                txtContraseña.ForeColor = System.Drawing.Color.Gray;
-                txtContraseña.UseSystemPasswordChar = false; // Desactiva los asteriscos
+                txtContraseña.ForeColor = Color.Gray;
+                txtContraseña.UseSystemPasswordChar = false;
             }
         }
 
+        /// <summary>
+        /// Configura un placeholder personalizado para un TextBox.
+        /// </summary>
+        /// <param name="txtBox">Control TextBox a configurar</param>
+        /// <param name="placeholder">Texto del placeholder</param>
+        /// <param name="esContraseña">True si se trata de un campo de contraseña</param>
         private void ConfigurarPlaceholder(TextBox txtBox, string placeholder, bool esContraseña = false)
         {
-            // Asigna el placeholder inicial
             txtBox.Text = placeholder;
-            txtBox.ForeColor = System.Drawing.Color.Gray;
+            txtBox.ForeColor = Color.Gray;
 
-            // Configurar evento Enter
             txtBox.Enter += (sender, e) =>
             {
                 if (txtBox.Text == placeholder)
                 {
                     txtBox.Text = "";
-                    txtBox.ForeColor = System.Drawing.Color.Black;
+                    txtBox.ForeColor = Color.Black;
                     if (esContraseña)
                         txtBox.UseSystemPasswordChar = true;
                 }
             };
 
-            // Configurar evento Leave
             txtBox.Leave += (sender, e) =>
             {
                 if (string.IsNullOrWhiteSpace(txtBox.Text))
                 {
                     txtBox.Text = placeholder;
-                    txtBox.ForeColor = System.Drawing.Color.Gray;
+                    txtBox.ForeColor = Color.Gray;
                     if (esContraseña)
                         txtBox.UseSystemPasswordChar = false;
                 }
             };
         }
-
-
     }
 }

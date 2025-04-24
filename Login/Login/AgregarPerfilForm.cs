@@ -4,28 +4,42 @@ using System.Windows.Forms;
 
 namespace SistemaLogin
 {
+    /// <summary>
+    /// Formulario para agregar un nuevo perfil de usuario al sistema.
+    /// </summary>
     public partial class AgregarPerfilForm : Form
     {
+        /// <summary>
+        /// Nombre de usuario ingresado.
+        /// </summary>
         public string Usuario { get; private set; }
+
+        /// <summary>
+        /// Contraseña ingresada por el usuario.
+        /// </summary>
         public string Contrasena { get; private set; }
+
+        /// <summary>
+        /// Indica si el nuevo perfil es de administrador.
+        /// </summary>
         public bool EsAdministrador { get; private set; }
 
         private readonly ToolTip _tooltipContrasena;
 
+        /// <summary>
+        /// Inicializa el formulario y configura el comportamiento de los controles.
+        /// </summary>
         public AgregarPerfilForm()
         {
             InitializeComponent();
 
-            // Asignar botones de teclado
             AcceptButton = btnAceptar;
             CancelButton = btnCancelar;
 
-            // Inicialmente deshabilitar "Aceptar"
             btnAceptar.Enabled = false;
             txtUsuario.TextChanged += ValidarEntradas;
             txtContrasena.TextChanged += ValidarEntradas;
 
-            // Instanciar y configurar Tooltip en el campo de contraseña
             _tooltipContrasena = new ToolTip
             {
                 ShowAlways = true,
@@ -36,6 +50,9 @@ namespace SistemaLogin
             _tooltipContrasena.SetToolTip(txtContrasena, "Recomendación: mínimo 6 caracteres");
         }
 
+        /// <summary>
+        /// Valida si los campos están completos para habilitar el botón Aceptar.
+        /// </summary>
         private void ValidarEntradas(object sender, EventArgs e)
         {
             btnAceptar.Enabled =
@@ -43,27 +60,26 @@ namespace SistemaLogin
                 !string.IsNullOrWhiteSpace(txtContrasena.Text);
         }
 
+        /// <summary>
+        /// Crea el nuevo perfil si los datos ingresados son válidos y no duplicados.
+        /// </summary>
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            // Trim de espacios
             var usuarioTrim = txtUsuario.Text.Trim();
             var contrasenaTrim = txtContrasena.Text.Trim();
 
-            // Validar que los campos estén completos
             if (string.IsNullOrWhiteSpace(usuarioTrim) || string.IsNullOrWhiteSpace(contrasenaTrim))
             {
                 MessageBox.Show("Por favor, complete todos los campos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Validar unicidad de usuario
             if (UsuarioExiste(usuarioTrim))
             {
                 MessageBox.Show($"El usuario '{usuarioTrim}' ya existe.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            // Asignar propiedades de salida
             Usuario = usuarioTrim;
             Contrasena = contrasenaTrim;
             EsAdministrador = chkEsAdministrador.Checked;
@@ -72,13 +88,21 @@ namespace SistemaLogin
             Close();
         }
 
+        /// <summary>
+        /// Cancela el formulario y descarta los cambios.
+        /// </summary>
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
             Close();
         }
 
-        // Helper genérico para lecturas desde la base de datos
+        /// <summary>
+        /// Ejecuta una consulta de lectura contra la base de datos.
+        /// </summary>
+        /// <param name="query">Consulta SQL</param>
+        /// <param name="configurarParametros">Acción que configura los parámetros</param>
+        /// <param name="procesarReader">Acción que procesa los resultados</param>
         private void EjecutarQueryReader(
             string query,
             Action<SQLiteCommand> configurarParametros,
@@ -94,7 +118,11 @@ namespace SistemaLogin
             }
         }
 
-        // Comprueba si un usuario ya existe en la base de datos
+        /// <summary>
+        /// Verifica si ya existe un usuario con el nombre especificado.
+        /// </summary>
+        /// <param name="usuario">Nombre de usuario a verificar</param>
+        /// <returns>True si el usuario ya existe</returns>
         private bool UsuarioExiste(string usuario)
         {
             bool existe = false;
