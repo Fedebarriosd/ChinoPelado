@@ -1,7 +1,8 @@
-﻿# Changelog
+﻿## [2025-04-29]
 
-Todas las versiones y cambios importantes.
+- 🚀 Fix: solución del error de inicio por ícono faltante + ajustes finales - SeguridadHelper fue movido a su propio archivo .cs en vez de estar embebido en AdminForm.cs - Comentarios XML añadidos - Changelog actualizado - Añadir soporte para cierre de sesión con retorno al LoginForm - Cambios de eficiencia de código en todos los archivos e interfaz gráfica rediseñada. Lista completa de cambios en el CHANGELOG.md adjunto. - Proyecto funcional sin documentación ni pruebas unitarias - Merge branch 'master' of https://github.com/Fedebarriosd/ChinoPelado - Commit del proyecto completamente funcional. Faltan los unit-tests y la documentación formal, - Consideraciones importantse 1 README.md - Create LICENSE - Update README.md - README.md - Add project files. - Add .gitattributes, .gitignore, and README.md.
 
+---
 ## 2025-04-16
 
 ### LoginForm.cs
