@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Data.SQLite;
 using System.Windows.Forms;
-using SistemaLogin;
-
 
 namespace SistemaLogin
 {
@@ -180,5 +178,24 @@ namespace SistemaLogin
             this.DialogResult = DialogResult.Retry;
             this.Close();
         }
+
+        /// <summary>
+        /// Abre el formulario para el registro de stock.
+        /// </summary>
+        private void btnCargarStock_Click(object sender, EventArgs e)
+        {
+            RegistroStockForm form = new RegistroStockForm();
+            form.ShowDialog(); // Abre el formulario como ventana modal
+        }
+
+        /// <summary>
+        /// Abre el formulario para consultar stock.
+        /// </summary>
+        private void btnConsultarStock_Click(object sender, EventArgs e)
+        {
+            ConsultaStockForm consultaStockForm = new ConsultaStockForm();
+            consultaStockForm.ShowDialog();
+        }
     }
+ 
 }

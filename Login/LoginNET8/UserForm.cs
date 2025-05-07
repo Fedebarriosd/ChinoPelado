@@ -1,20 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Login
+namespace SistemaLogin
 {
-    public partial class UserForm: Form
+    public partial class UserForm : Form
     {
         public UserForm()
         {
-            InitializeComponent();
+            InitializeComponent(); // ← ESTO es lo que crea el diseño que pusimos
+        }
+
+        private void btnCargarStock_Click(object sender, EventArgs e)
+        {
+            RegistroStockForm registroStockForm = new RegistroStockForm();
+            registroStockForm.ShowDialog();
+        }
+
+        private void btnConsultarStock_Click(object sender, EventArgs e)
+        {
+            ConsultaStockForm consultaStockForm = new ConsultaStockForm();
+            consultaStockForm.ShowDialog();
         }
     }
 }
