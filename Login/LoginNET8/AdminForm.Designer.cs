@@ -13,7 +13,8 @@ namespace SistemaLogin
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Button btnDesactivar;
         private System.Windows.Forms.Button btnCerrarSesion;
-
+        private System.Windows.Forms.Button btnCargarStock;
+        private System.Windows.Forms.Button btnConsultarStock;
 
         /// <summary>
         /// Limpiar los recursos que se estén usando.
@@ -39,20 +40,27 @@ namespace SistemaLogin
             this.btnAgregar = new System.Windows.Forms.Button();
             this.btnEditar = new System.Windows.Forms.Button();
             this.btnDesactivar = new System.Windows.Forms.Button();
+            this.btnCerrarSesion = new System.Windows.Forms.Button();
+            this.btnCargarStock = new System.Windows.Forms.Button();
+            this.btnConsultarStock = new System.Windows.Forms.Button();
+
             this.SuspendLayout();
 
             // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            // Definición de filas: 3 filas de igual tamaño (33.3% cada una)
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.3F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.3F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.3F));
-            // Una única columna ocupa el 100% del ancho
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+
+            // Ajustamos a 6 filas
+            this.tableLayoutPanel1.RowCount = 6;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66F)); // btnAgregar
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66F)); // btnEditar
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66F)); // btnDesactivar
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66F)); // btnCerrarSesion
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66F)); // btnCargarStock
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66F)); // btnConsultarStock
 
             // 
             // btnAgregar
@@ -75,36 +83,43 @@ namespace SistemaLogin
             this.btnDesactivar.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnDesactivar.Click += new System.EventHandler(this.btnDesactivar_Click);
 
-            // Agregar los botones al TableLayoutPanel
-            this.tableLayoutPanel1.Controls.Add(this.btnAgregar, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnEditar, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.btnDesactivar, 0, 2);
-
-            // 
-            // AdminForm
-            // 
-            this.ClientSize = new System.Drawing.Size(300, 200);
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "AdminForm";
-            this.Text = "Panel de Administrador";
-            this.ResumeLayout(false);
-
             // 
             // btnCerrarSesion
             // 
-            this.btnCerrarSesion = new System.Windows.Forms.Button();
             this.btnCerrarSesion.Text = "Cerrar sesión";
             this.btnCerrarSesion.Dock = System.Windows.Forms.DockStyle.Fill;
             this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
 
-            this.tableLayoutPanel1.RowCount = 4;
-            this.tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            this.tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            this.tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            this.tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 25F));
-            this.tableLayoutPanel1.Controls.Add(this.btnCerrarSesion, 0, 3);
-            this.tableLayoutPanel1.SetColumnSpan(this.btnCerrarSesion, 1);
+            // 
+            // btnCargarStock
+            // 
+            this.btnCargarStock.Text = "Cargar Stock";
+            this.btnCargarStock.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnCargarStock.Click += new System.EventHandler(this.btnCargarStock_Click);
 
+            // 
+            // btnConsultarStock
+            // 
+            this.btnConsultarStock.Text = "Consultar Stock";
+            this.btnConsultarStock.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnConsultarStock.Click += new System.EventHandler(this.btnConsultarStock_Click);
+
+            // Agregar botones al panel
+            this.tableLayoutPanel1.Controls.Add(this.btnAgregar, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.btnEditar, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.btnDesactivar, 0, 2);
+            this.tableLayoutPanel1.Controls.Add(this.btnCerrarSesion, 0, 3);
+            this.tableLayoutPanel1.Controls.Add(this.btnCargarStock, 0, 4);
+            this.tableLayoutPanel1.Controls.Add(this.btnConsultarStock, 0, 5);
+
+            // 
+            // AdminForm
+            // 
+            this.ClientSize = new System.Drawing.Size(300, 300);
+            this.Controls.Add(this.tableLayoutPanel1);
+            this.Name = "AdminForm";
+            this.Text = "Panel de Administrador";
+            this.ResumeLayout(false);
         }
 
         #endregion
