@@ -33,8 +33,12 @@
             txtProducto = new TextBox();
             lblCantidad = new Label();
             numCantidad = new NumericUpDown();
-            btnRegistrarVenta = new Button();
-            lstVentas = new ListBox();
+            btnRegistrar = new Button();
+            lstVentas = new ListView();
+            PRODUCTO = new ColumnHeader();
+            CANTIDAD = new ColumnHeader();
+            btnsalir = new Button();
+            btnEliminar = new Button();
             ((System.ComponentModel.ISupportInitialize)numCantidad).BeginInit();
             SuspendLayout();
             // 
@@ -43,7 +47,7 @@
             lblProducto.AutoSize = true;
             lblProducto.BackColor = SystemColors.ActiveBorder;
             lblProducto.BorderStyle = BorderStyle.Fixed3D;
-            lblProducto.Location = new Point(126, 117);
+            lblProducto.Location = new Point(35, 58);
             lblProducto.Name = "lblProducto";
             lblProducto.Size = new Size(58, 17);
             lblProducto.TabIndex = 0;
@@ -51,7 +55,7 @@
             // 
             // txtProducto
             // 
-            txtProducto.Location = new Point(211, 117);
+            txtProducto.Location = new Point(133, 55);
             txtProducto.Name = "txtProducto";
             txtProducto.Size = new Size(100, 23);
             txtProducto.TabIndex = 1;
@@ -62,45 +66,78 @@
             lblCantidad.BackColor = SystemColors.ActiveBorder;
             lblCantidad.FlatStyle = FlatStyle.Popup;
             lblCantidad.ImageAlign = ContentAlignment.MiddleRight;
-            lblCantidad.Location = new Point(126, 160);
+            lblCantidad.Location = new Point(35, 106);
             lblCantidad.Name = "lblCantidad";
             lblCantidad.Size = new Size(55, 15);
             lblCantidad.TabIndex = 2;
             lblCantidad.Text = "Cantidad";
-            lblCantidad.Click += lblcantidad_Click;
             // 
             // numCantidad
             // 
-            numCantidad.Location = new Point(213, 159);
+            numCantidad.Location = new Point(133, 104);
             numCantidad.Name = "numCantidad";
             numCantidad.Size = new Size(120, 23);
             numCantidad.TabIndex = 3;
             // 
-            // btnRegistrarVenta
+            // btnRegistrar
             // 
-            btnRegistrarVenta.Location = new Point(120, 209);
-            btnRegistrarVenta.Name = "btnRegistrarVenta";
-            btnRegistrarVenta.Size = new Size(75, 23);
-            btnRegistrarVenta.TabIndex = 4;
-            btnRegistrarVenta.Text = "Registrar Venta";
-            btnRegistrarVenta.UseVisualStyleBackColor = true;
+            btnRegistrar.Location = new Point(35, 186);
+            btnRegistrar.Name = "btnRegistrar";
+            btnRegistrar.Size = new Size(75, 23);
+            btnRegistrar.TabIndex = 4;
+            btnRegistrar.Text = "Registrar Venta";
+            btnRegistrar.UseVisualStyleBackColor = true;
+            btnRegistrar.Click += btnRegistrar_Click;
             // 
             // lstVentas
             // 
-            lstVentas.FormattingEnabled = true;
-            lstVentas.ItemHeight = 15;
-            lstVentas.Location = new Point(392, 29);
+            lstVentas.Columns.AddRange(new ColumnHeader[] { PRODUCTO, CANTIDAD });
+            lstVentas.Location = new Point(303, 55);
             lstVentas.Name = "lstVentas";
-            lstVentas.Size = new Size(316, 274);
-            lstVentas.TabIndex = 5;
+            lstVentas.Size = new Size(204, 264);
+            lstVentas.TabIndex = 6;
+            lstVentas.UseCompatibleStateImageBehavior = false;
+            lstVentas.View = View.Details;
+            // 
+            // PRODUCTO
+            // 
+            PRODUCTO.Text = "Producto ";
+            PRODUCTO.Width = 100;
+            // 
+            // CANTIDAD
+            // 
+            CANTIDAD.Text = "Cantidad Total\n\n";
+            CANTIDAD.Width = 100;
+            // 
+            // btnsalir
+            // 
+            btnsalir.Location = new Point(158, 186);
+            btnsalir.Name = "btnsalir";
+            btnsalir.Size = new Size(75, 23);
+            btnsalir.TabIndex = 7;
+            btnsalir.Text = "Salir";
+            btnsalir.UseVisualStyleBackColor = true;
+            btnsalir.Click += btnsalir_Click;
+            // 
+            // btnEliminar
+            // 
+            btnEliminar.Location = new Point(35, 232);
+            btnEliminar.Name = "btnEliminar";
+            btnEliminar.Size = new Size(75, 23);
+            btnEliminar.TabIndex = 8;
+            btnEliminar.Text = "Eliminar";
+            btnEliminar.UseVisualStyleBackColor = true;
+            btnEliminar.Click += btnEliminar_Click;
             // 
             // VentasForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(547, 361);
+            Controls.Add(btnEliminar);
+            Controls.Add(btnsalir);
             Controls.Add(lstVentas);
-            Controls.Add(btnRegistrarVenta);
+            Controls.Add(btnRegistrar);
             Controls.Add(numCantidad);
             Controls.Add(lblCantidad);
             Controls.Add(txtProducto);
@@ -119,7 +156,11 @@
         private TextBox txtProducto;
         private Label lblCantidad;
         private NumericUpDown numCantidad;
-        private Button btnRegistrarVenta;
-        private ListBox lstVentas;
+        private Button btnRegistrar;
+        private ListView lstVentas;
+        private ColumnHeader PRODUCTO;
+        private ColumnHeader CANTIDAD;
+        private Button btnsalir;
+        private Button btnEliminar;
     }
 }

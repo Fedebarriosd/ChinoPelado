@@ -139,6 +139,7 @@ namespace SistemaLogin
             btnRegistrarVenta.TabIndex = 6;
             btnRegistrarVenta.Text = "Registrar Venta";
             btnRegistrarVenta.UseVisualStyleBackColor = true;
+            btnRegistrarVenta.Click += btnRegistrarVenta_Click;
             // 
             // AdminForm
             // 
@@ -152,6 +153,6 @@ namespace SistemaLogin
 
         #endregion
 
-        
+
     }
 }
