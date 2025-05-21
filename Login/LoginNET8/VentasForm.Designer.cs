@@ -35,6 +35,7 @@
             numCantidad = new NumericUpDown();
             btnRegistrar = new Button();
             lstVentas = new ListView();
+            Id = new ColumnHeader();
             PRODUCTO = new ColumnHeader();
             CANTIDAD = new ColumnHeader();
             btnsalir = new Button();
@@ -91,23 +92,28 @@
             // 
             // lstVentas
             // 
-            lstVentas.Columns.AddRange(new ColumnHeader[] { PRODUCTO, CANTIDAD });
+            lstVentas.Columns.AddRange(new ColumnHeader[] { Id, PRODUCTO, CANTIDAD });
             lstVentas.Location = new Point(303, 55);
             lstVentas.Name = "lstVentas";
-            lstVentas.Size = new Size(204, 264);
+            lstVentas.Size = new Size(293, 264);
             lstVentas.TabIndex = 6;
             lstVentas.UseCompatibleStateImageBehavior = false;
             lstVentas.View = View.Details;
             // 
+            // Id
+            // 
+            Id.Text = "Nro Pedido";
+            Id.Width = 80;
+            // 
             // PRODUCTO
             // 
             PRODUCTO.Text = "Producto ";
-            PRODUCTO.Width = 100;
+            PRODUCTO.Width = 150;
             // 
             // CANTIDAD
             // 
-            CANTIDAD.Text = "Cantidad Total\n\n";
-            CANTIDAD.Width = 100;
+            CANTIDAD.Text = "Cantidad";
+            CANTIDAD.Width = 80;
             // 
             // btnsalir
             // 
@@ -133,7 +139,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(547, 361);
+            ClientSize = new Size(636, 361);
             Controls.Add(btnEliminar);
             Controls.Add(btnsalir);
             Controls.Add(lstVentas);
@@ -162,5 +168,6 @@
         private ColumnHeader CANTIDAD;
         private Button btnsalir;
         private Button btnEliminar;
+        private ColumnHeader Id;
     }
 }

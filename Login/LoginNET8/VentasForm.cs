@@ -13,6 +13,23 @@ namespace LoginNET8
 {
     public partial class VentasForm : Form
     {
+        // Diccionario de IDs con sus nombres
+        private Dictionary<string, string> productos = new Dictionary<string, string>()
+{
+    { "01", "Pizza Peperoni" },
+    { "02", "Pizza Muzzarella" },
+    { "03", "Pizza Napolitana" },
+    { "04", "Pizza Pollo con Catupiry" },
+    { "05", "Pizza Palmito" },
+    { "06", "Pizza Bacon" },
+    { "07", "Pizza Mexicana" },
+    { "08", "Pizza Carnibora" },
+    { "09", "Pizza Margatira" },
+    { "10", "Pizza Vegetariana" },
+    { "007", "Pizza Espacial del chino" },
+
+};
+
         private string connectionString = "Data Source=ventas.db";
 
         public VentasForm()
@@ -42,7 +59,14 @@ namespace LoginNET8
 
         private void btnRegistrar_Click(object sender, EventArgs e)
         {
-            string producto = txtProducto.Text;
+            string productoId = txtProducto.Text.Trim();
+            string producto;
+
+            if (!productos.TryGetValue(productoId, out producto))
+            {
+                MessageBox.Show("ID de producto no válido.");
+                return;
+            }
             int cantidad = (int)numCantidad.Value;
 
             if (string.IsNullOrWhiteSpace(producto))
@@ -71,11 +95,13 @@ namespace LoginNET8
         private void CargarResumenVentas()
         {
             lstVentas.Items.Clear();
+            int nroPedido = 1; // Contador para el número de pedido
 
             using (var connection = new SQLiteConnection("Data Source=ventas.db"))
             {
                 connection.Open();
                 string query = "SELECT producto, SUM(cantidad) as total FROM ventas GROUP BY producto";
+
                 using (var cmd = new SQLiteCommand(query, connection))
                 using (var reader = cmd.ExecuteReader())
                 {
@@ -84,10 +110,15 @@ namespace LoginNET8
                         string producto = reader["producto"].ToString();
                         int total = Convert.ToInt32(reader["total"]);
 
-                        var item = new ListViewItem(producto);
-                        item.SubItems.Add(total.ToString());
+                        // Si estás usando un diccionario de productos, podés traducir el ID a nombre
+                        // Ejemplo: producto = productos.ContainsKey(producto) ? productos[producto] : producto;
+
+                        var item = new ListViewItem(nroPedido.ToString()); // Nro. Pedido
+                        item.SubItems.Add(producto);                       // Producto
+                        item.SubItems.Add(total.ToString());               // Cantidad
 
                         lstVentas.Items.Add(item);
+                        nroPedido++;
                     }
                 }
             }
@@ -103,33 +134,31 @@ namespace LoginNET8
         {
             if (lstVentas.SelectedItems.Count == 0)
             {
-                MessageBox.Show("Selecciona un producto del listado para eliminar.");
+                MessageBox.Show("Selecciona un producto para eliminar.");
                 return;
             }
 
-            string productoSeleccionado = lstVentas.SelectedItems[0].Text;
+            string producto = lstVentas.SelectedItems[0].SubItems[1].Text; // Columna 1 = Producto
 
-            DialogResult result = MessageBox.Show($"¿Seguro que quieres eliminar las ventas del producto '{productoSeleccionado}'?",
-                                                  "Confirmar eliminación",
-                                                  MessageBoxButtons.YesNo,
-                                                  MessageBoxIcon.Warning);
+            var confirmResult = MessageBox.Show($"¿Estás seguro de eliminar todas las ventas de '{producto}'?",
+                                                "Confirmar eliminación",
+                                                MessageBoxButtons.YesNo);
 
-            if (result == DialogResult.Yes)
+            if (confirmResult == DialogResult.Yes)
             {
-                using (var connection = new SQLiteConnection(connectionString))
+                using (var connection = new SQLiteConnection("Data Source=ventas.db"))
                 {
                     connection.Open();
                     string deleteQuery = "DELETE FROM ventas WHERE producto = @producto";
 
                     using (var cmd = new SQLiteCommand(deleteQuery, connection))
                     {
-                        cmd.Parameters.AddWithValue("@producto", productoSeleccionado);
+                        cmd.Parameters.AddWithValue("@producto", producto);
                         cmd.ExecuteNonQuery();
                     }
                 }
 
-                MessageBox.Show("Eliminado correctamente.");
-                CargarResumenVentas(); // Recarga el resumen
+                CargarResumenVentas(); // Recarga el ListView después de eliminar
             }
 
         }
