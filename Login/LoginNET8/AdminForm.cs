@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.SQLite;
 using System.Windows.Forms;
+using LoginNET8;
 
 namespace SistemaLogin
 {
@@ -196,6 +197,12 @@ namespace SistemaLogin
             ConsultaStockForm consultaStockForm = new ConsultaStockForm();
             consultaStockForm.ShowDialog();
         }
+
+        private void btnRegistrarVenta_Click(object sender, EventArgs e)
+        {
+            VentasForm ventasForm = new VentasForm();
+            ventasForm.ShowDialog(); // Esto abre el formulario como ventana modal
+        }
     }
- 
+
 }

@@ -15,7 +15,7 @@ namespace SistemaLogin
         private System.Windows.Forms.Button btnCerrarSesion;
         private System.Windows.Forms.Button btnCargarStock;
         private System.Windows.Forms.Button btnConsultarStock;
-
+        private System.Windows.Forms.Button btnRegistrarVenta;
         /// <summary>
         /// Limpiar los recursos que se estén usando.
         /// </summary>
@@ -35,93 +35,124 @@ namespace SistemaLogin
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnAgregar = new System.Windows.Forms.Button();
-            this.btnEditar = new System.Windows.Forms.Button();
-            this.btnDesactivar = new System.Windows.Forms.Button();
-            this.btnCerrarSesion = new System.Windows.Forms.Button();
-            this.btnCargarStock = new System.Windows.Forms.Button();
-            this.btnConsultarStock = new System.Windows.Forms.Button();
-
-            this.SuspendLayout();
-
+            tableLayoutPanel1 = new TableLayoutPanel();
+            btnAgregar = new Button();
+            btnEditar = new Button();
+            btnDesactivar = new Button();
+            btnCerrarSesion = new Button();
+            btnCargarStock = new Button();
+            btnConsultarStock = new Button();
+            btnRegistrarVenta = new Button();
+            tableLayoutPanel1.SuspendLayout();
+            SuspendLayout();
             // 
             // tableLayoutPanel1
             // 
-            this.tableLayoutPanel1.ColumnCount = 1;
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-
-            // Ajustamos a 6 filas
-            this.tableLayoutPanel1.RowCount = 6;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66F)); // btnAgregar
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66F)); // btnEditar
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66F)); // btnDesactivar
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66F)); // btnCerrarSesion
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66F)); // btnCargarStock
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 16.66F)); // btnConsultarStock
-
+            tableLayoutPanel1.ColumnCount = 1;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tableLayoutPanel1.Controls.Add(btnAgregar, 0, 0);
+            tableLayoutPanel1.Controls.Add(btnEditar, 0, 1);
+            tableLayoutPanel1.Controls.Add(btnDesactivar, 0, 2);
+            tableLayoutPanel1.Controls.Add(btnCerrarSesion, 0, 3);
+            tableLayoutPanel1.Controls.Add(btnCargarStock, 0, 4);
+            tableLayoutPanel1.Controls.Add(btnConsultarStock, 0, 5);
+            tableLayoutPanel1.Controls.Add(btnRegistrarVenta, 0, 6);
+            tableLayoutPanel1.Dock = DockStyle.Fill;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 7;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857132F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857132F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857132F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857132F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857132F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857132F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 14.2857132F));
+            tableLayoutPanel1.Size = new Size(324, 313);
+            tableLayoutPanel1.TabIndex = 0;
             // 
             // btnAgregar
             // 
-            this.btnAgregar.Text = "Añadir perfil";
-            this.btnAgregar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnAgregar.Click += new System.EventHandler(this.btnAgregar_Click);
-
+            btnAgregar.Dock = DockStyle.Fill;
+            btnAgregar.Location = new Point(3, 3);
+            btnAgregar.Name = "btnAgregar";
+            btnAgregar.Size = new Size(318, 38);
+            btnAgregar.TabIndex = 0;
+            btnAgregar.Text = "Añadir perfil";
+            btnAgregar.Click += btnAgregar_Click;
             // 
             // btnEditar
             // 
-            this.btnEditar.Text = "Editar perfil";
-            this.btnEditar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
-
+            btnEditar.Dock = DockStyle.Fill;
+            btnEditar.Location = new Point(3, 47);
+            btnEditar.Name = "btnEditar";
+            btnEditar.Size = new Size(318, 38);
+            btnEditar.TabIndex = 1;
+            btnEditar.Text = "Editar perfil";
+            btnEditar.Click += btnEditar_Click;
             // 
             // btnDesactivar
             // 
-            this.btnDesactivar.Text = "Desactivar perfil";
-            this.btnDesactivar.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnDesactivar.Click += new System.EventHandler(this.btnDesactivar_Click);
-
+            btnDesactivar.Dock = DockStyle.Fill;
+            btnDesactivar.Location = new Point(3, 91);
+            btnDesactivar.Name = "btnDesactivar";
+            btnDesactivar.Size = new Size(318, 38);
+            btnDesactivar.TabIndex = 2;
+            btnDesactivar.Text = "Desactivar perfil";
+            btnDesactivar.Click += btnDesactivar_Click;
             // 
             // btnCerrarSesion
             // 
-            this.btnCerrarSesion.Text = "Cerrar sesión";
-            this.btnCerrarSesion.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCerrarSesion.Click += new System.EventHandler(this.btnCerrarSesion_Click);
-
+            btnCerrarSesion.Dock = DockStyle.Fill;
+            btnCerrarSesion.Location = new Point(3, 135);
+            btnCerrarSesion.Name = "btnCerrarSesion";
+            btnCerrarSesion.Size = new Size(318, 38);
+            btnCerrarSesion.TabIndex = 3;
+            btnCerrarSesion.Text = "Cerrar sesión";
+            btnCerrarSesion.Click += btnCerrarSesion_Click;
             // 
             // btnCargarStock
             // 
-            this.btnCargarStock.Text = "Cargar Stock";
-            this.btnCargarStock.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnCargarStock.Click += new System.EventHandler(this.btnCargarStock_Click);
-
+            btnCargarStock.Dock = DockStyle.Fill;
+            btnCargarStock.Location = new Point(3, 179);
+            btnCargarStock.Name = "btnCargarStock";
+            btnCargarStock.Size = new Size(318, 38);
+            btnCargarStock.TabIndex = 4;
+            btnCargarStock.Text = "Cargar Stock";
+            btnCargarStock.Click += btnCargarStock_Click;
             // 
             // btnConsultarStock
             // 
-            this.btnConsultarStock.Text = "Consultar Stock";
-            this.btnConsultarStock.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnConsultarStock.Click += new System.EventHandler(this.btnConsultarStock_Click);
-
-            // Agregar botones al panel
-            this.tableLayoutPanel1.Controls.Add(this.btnAgregar, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.btnEditar, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.btnDesactivar, 0, 2);
-            this.tableLayoutPanel1.Controls.Add(this.btnCerrarSesion, 0, 3);
-            this.tableLayoutPanel1.Controls.Add(this.btnCargarStock, 0, 4);
-            this.tableLayoutPanel1.Controls.Add(this.btnConsultarStock, 0, 5);
-
+            btnConsultarStock.Dock = DockStyle.Fill;
+            btnConsultarStock.Location = new Point(3, 223);
+            btnConsultarStock.Name = "btnConsultarStock";
+            btnConsultarStock.Size = new Size(318, 38);
+            btnConsultarStock.TabIndex = 5;
+            btnConsultarStock.Text = "Consultar Stock";
+            btnConsultarStock.Click += btnConsultarStock_Click;
+            // 
+            // btnRegistrarVenta
+            // 
+            btnRegistrarVenta.Location = new Point(3, 267);
+            btnRegistrarVenta.Name = "btnRegistrarVenta";
+            btnRegistrarVenta.Size = new Size(318, 39);
+            btnRegistrarVenta.TabIndex = 6;
+            btnRegistrarVenta.Text = "Registrar Venta";
+            btnRegistrarVenta.UseVisualStyleBackColor = true;
+            btnRegistrarVenta.Click += btnRegistrarVenta_Click;
             // 
             // AdminForm
             // 
-            this.ClientSize = new System.Drawing.Size(300, 300);
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.Name = "AdminForm";
-            this.Text = "Panel de Administrador";
-            this.ResumeLayout(false);
+            ClientSize = new Size(324, 313);
+            Controls.Add(tableLayoutPanel1);
+            Name = "AdminForm";
+            Text = "Panel de Administrador";
+            tableLayoutPanel1.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion
+
+
     }
 }
